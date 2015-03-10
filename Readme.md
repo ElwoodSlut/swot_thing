@@ -1,5 +1,8 @@
-install nodemon
+# SWOT Thing prototype
 
-To start the project
+To install:
+`npm install nodemon`
 
-set DEBUG=swot_thing & nodemon ./bin/www
+In Project directory: `npm install`
+
+To start the project: `set DEBUG=swot_thing & nodemon ./bin/www`
