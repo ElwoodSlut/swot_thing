@@ -1,5 +1,6 @@
-// initializes the router
+// initializes the routes
 module.exports = function (app) {
+    app.use('/',require('./routes/info'));
     app.use('/action', require('./routes/action'));
     app.use('/info', require('./routes/info'));
     app.use('/register', require('./routes/register'));
