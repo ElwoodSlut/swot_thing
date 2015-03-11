@@ -2,7 +2,7 @@ var fs = require('fs');
 var express = require('express');
 var router = express.Router();
 
-var file = "resources/tokens.db";
+var tokensFile = "resources/tokens.db";
 
 var sqlite3 = require("sqlite3").verbose();
 
@@ -10,14 +10,14 @@ var sqlite3 = require("sqlite3").verbose();
  * Initializes the DB
  */
 var initializeDB = function () {
-    var exists = fs.existsSync(file);
+    var exists = fs.existsSync(tokensFile);
     if(!exists){
         console.log("DB not found ... creating new one");
-        fs.openSync(file, "w");
+        fs.openSync(tokensFile, "w");
     }
 
     // @TODO alternative to open DB?!
-    var db = new sqlite3.Database(file);
+    var db = new sqlite3.Database(tokensFile);
 
     db.serialize(function() {
         if (!exists) {
@@ -26,9 +26,6 @@ var initializeDB = function () {
             stmt.run();
             stmt.finalize();
         }
-
-        //db.each("SELECT token FROM activate_token", function(err, row) { console.log(row.token); });
-
     });
     db.close();
 };
@@ -39,7 +36,7 @@ var initializeDB = function () {
  */
 var setDeviceToken = function(tokenUsed){
     // @TODO alternative to open DB?!
-    var db = new sqlite3.Database(file);
+    var db = new sqlite3.Database(tokensFile);
     var used = 0;
     if(tokenUsed){ used = 1; }
 
@@ -52,7 +49,7 @@ var setDeviceToken = function(tokenUsed){
  * Returns the device token
  */
 var getDeviceToken = function(callback){
-    var db = new sqlite3.Database(file);
+    var db = new sqlite3.Database(tokensFile);
     var token;
 
     // @TODO keep id as indicator what to set?
