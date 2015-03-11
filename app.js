@@ -17,6 +17,7 @@ app.set('view engine', 'jade');
 var db = require('./resources/db');
 db.initializeDB();
 
+// add routes to app context
 var router = require('./router')(app);
 
 // catch 404 and forward to error handler

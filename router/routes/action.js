@@ -9,11 +9,10 @@ router.get('/', function(req, res, next) {
 /**
  * Action which turns the prototype 'light' on or off
  */
-router.get('/first_action', function(req, res) {
-    console.log("----------------------?");
-    if(req.query.action === "on") {
+router.post('/first_action', function(req, res) {
+    if(req.body.action === "on") {
         res.json({lamp: 'on'});
-    }else if( req.query.action === "off" ) {
+    }else if( req.body.action === "off" ) {
         res.json({lamp: 'off'});
     }else{
         // a wrong parameter was sent
@@ -22,7 +21,6 @@ router.get('/first_action', function(req, res) {
         err.message = 'Parameter for command is wrong';
         res.status(406).json(err);
     }
-    console.log("----------------------!");
 });
 
 module.exports = router;
