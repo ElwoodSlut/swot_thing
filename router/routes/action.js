@@ -9,10 +9,10 @@ router.get('/', function(req, res, next) {
 /**
  * Action which turns the prototype 'light' on or off
  */
-router.post('/first_action', function(req, res) {
-    if(req.body.action === "on") {
+router.get('/first_action', function(req, res) {
+    if(req.query.action === "on") {
         res.json({lamp: 'on'});
-    }else if( req.body.action === "off" ) {
+    }else if( req.query.action === "off" ) {
         res.json({lamp: 'off'});
     }else{
         // a wrong parameter was sent
