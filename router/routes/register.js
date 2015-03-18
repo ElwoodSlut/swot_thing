@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var db = require('../../resources/db');
+var config = require('../../resources/deviceConfig.js');
 
 /**
  * Register route. Is called when the device is registered.
@@ -15,7 +16,8 @@ router.get('/', function(req, res) {
 
     if(req.query.tokenUsed == 1){
         db.setDeviceToken(req.query.tokenUsed)
-        res.json({device: 'Now i am registered'});
+        //res.json({device: 'Now i am registered'});
+        res.json(config);
     }else{
         // a wrong parameter was sent
         var err = new Error();
