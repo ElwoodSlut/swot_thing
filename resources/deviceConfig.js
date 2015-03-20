@@ -5,13 +5,19 @@ var deviceInfo = {"device": {
     "url": "localhost:3000",
     "functions": [{
         "name": "switch_light",
-        "action_url": "localhost:3000/action/switch_light",
+        "url": "localhost:3000/action/switch_light",
         "available": true,
-        "params": [
+        "parameters": [
             {
                 "name": "lightswitch",
                 "type": "integer",
-                "required": true
+                "required": true,
+                "constraints": [
+                    {
+                        "type": "NotNull",
+                        "message": "lightswitch may not be null"
+                    }
+                ]
             }
         ]
     }]
