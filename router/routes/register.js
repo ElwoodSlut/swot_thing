@@ -2,30 +2,30 @@ var express = require('express');
 var router = express.Router();
 
 var db = require('../../resources/db');
-var config = require('../../resources/deviceConfig.js');
+var registerInfo = require('../../resources/registerInfo.js');
 
 /**
  * Register route. Is called when the device is registered.
  * Sets the device_token to used.
  */
 router.get('/', function(req, res) {
-    /*var token;
-    db.getDeviceToken(function(t, err) {
-        token = t;
-    });*/
 
-    if(req.query.tokenUsed == 1){
-        db.setDeviceToken(req.query.tokenUsed)
-        //res.json({device: 'Now i am registered'});
-        res.json(config);
-    }else{
-        // a wrong parameter was sent
-        var err = new Error();
-        err.status = 406;
-        err.message = 'Parameter for command is wrong';
-        res.status(406).json(err);
-    }
+    db.getAccessToken(function(token, used, err) {
 
+        if(used != 1 && req.query.accessToken == token){
+            db.setAccessTokenToUsed();
+            //TODO: get network data dynamically
+            db.setNetworkData("swot","prototype");
+            res.json(registerInfo);
+        }else{
+            // a wrong parameter was sent
+            var err = new Error();
+            err.status = 500;
+            err.message = 'Something went wrong';
+            res.status(500).json(err);
+        }
+
+    });
 });
 
 module.exports = router;

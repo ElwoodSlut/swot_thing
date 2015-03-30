@@ -2,7 +2,7 @@ var fs = require('fs');
 var express = require('express');
 var router = express.Router();
 
-var tokensFile = "resources/tokens.db";
+var dataFile = "resources/deviceData.db";
 
 var sqlite3 = require("sqlite3").verbose();
 
@@ -10,58 +10,118 @@ var sqlite3 = require("sqlite3").verbose();
  * Initializes the DB
  */
 var initializeDB = function () {
-    var exists = fs.existsSync(tokensFile);
+    var exists = fs.existsSync(dataFile);
     if(!exists){
         console.log("DB not found ... creating new one");
-        fs.openSync(tokensFile, "w");
+        fs.openSync(dataFile, "w");
     }
 
-    // @TODO alternative to open DB?!
-    var db = new sqlite3.Database(tokensFile);
+    var db = new sqlite3.Database(dataFile);
 
     db.serialize(function() {
         if (!exists) {
-            db.run("CREATE TABLE device_token (token varchar(255), used tinyint)");
-            var stmt = db.prepare("INSERT INTO device_token VALUES ('asdfaskdfnvas', 0)");
+            db.run("CREATE TABLE access_token (token varchar(255), used tinyint)");
+            var stmt = db.prepare("INSERT INTO access_token VALUES ('R3g!st3erT0k3n', 0)");
             stmt.run();
             stmt.finalize();
+
+            db.run("CREATE TABLE status (root varchar(255), root_status varchar(255))");
+            var stmt2 = db.prepare("INSERT INTO status VALUES ('lamp', 'off')");
+            stmt2.run();
+            stmt2.finalize();
+
+            db.run("CREATE TABLE network_data (network_token varchar(255), network_id varchar(255))");
         }
     });
     db.close();
 };
 
 /**
- * Sets the device_token
+ * Sets the device_token to used
  * @param tokenUsed Sets the value of the device_token to used or not used.
  */
-var setDeviceToken = function(tokenUsed){
+var setAccessTokenToUsed = function(){
     // @TODO alternative to open DB?!
-    var db = new sqlite3.Database(tokensFile);
-    var used = 0;
-    if(tokenUsed){ used = 1; }
-
+    var db = new sqlite3.Database(dataFile);
     // @TODO keep id as indicator what to set?
-    db.run("UPDATE device_token SET used = ? WHERE ROWID = ?", tokenUsed, 1);
+    db.run("UPDATE access_token SET used = 1 WHERE ROWID = ?", 1);
     db.close();
 };
 
 /**
- * Returns the device token
+ * Sets the device_token free
+ * @param tokenUsed Sets the value of the device_token to used or not used.
  */
-var getDeviceToken = function(callback){
-    var db = new sqlite3.Database(tokensFile);
-    var token;
+var setAccessTokenFree = function(){
+    var db = new sqlite3.Database(dataFile);
+    db.run("UPDATE access_token SET used = 0 WHERE ROWID = ?", 1);
+    db.close();
+};
 
-    // @TODO keep id as indicator what to set?
-    db.get("SELECT token FROM device_token WHERE ROWID = ?", 1, function(err, row) {
-        callback(row.token, err);
+/**
+ * Returns the access token
+ */
+var getAccessToken = function(callback){
+    var db = new sqlite3.Database(dataFile);
+    db.get("SELECT token, used FROM access_token WHERE ROWID = ?", 1, function(err, row) {
+        callback(row.token, row.used, err);
     } );
 
     db.close();
 };
 
-// Exports the functions
-module.exports.setDeviceToken = setDeviceToken;
-module.exports.initializeDB = initializeDB;
-module.exports.getDeviceToken = getDeviceToken;
+/**
+ * Sets the network data of the device
+ * @param network_token
+ * @param network_id
+ */
+var setNetworkData = function(network_token, network_id){
+    var db = new sqlite3.Database(dataFile);
+    var stmt = db.prepare("INSERT INTO network_data VALUES (?, ?)", network_token, network_id);
+    stmt.run();
+    stmt.finalize();
 
+    db.close();
+};
+
+/**
+ * Clears the given network data
+ * @param network_token
+ * @param network_id
+ */
+var deleteNetworkData = function(network_token, network_id){
+    var db = new sqlite3.Database(dataFile);
+    db.run("DELETE FROM network_data WHERE network_token = ?", network_token);
+    db.close();
+};
+
+var getStatusInfo = function(callback){
+    var db = new sqlite3.Database(dataFile);
+    db.all("SELECT root, root_status FROM status", function(err, rows) {
+        var status = {};
+        rows.forEach(function (row) {
+            var root = row.root;
+            var root_status = row.root_status;
+            status[root] = root_status;
+        })
+        callback(status);
+    } );
+    db.close();
+};
+
+var setStatus = function(root, root_status){
+    var db = new sqlite3.Database(dataFile);
+    db.run("UPDATE status SET root_status = ? WHERE root = ?", root_status, root);
+    db.close();
+}
+
+
+// Exports the functions
+module.exports.setAccessTokenToUsed = setAccessTokenToUsed;
+module.exports.setAccessTokenFree = setAccessTokenFree;
+module.exports.initializeDB = initializeDB;
+module.exports.getAccessToken = getAccessToken;
+module.exports.setNetworkData = setNetworkData;
+module.exports.deleteNetworkData = deleteNetworkData;
+module.exports.getStatusInfo = getStatusInfo;
+module.exports.setStatus = setStatus;
