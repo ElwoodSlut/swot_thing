@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
  */
 router.get('/switch_light', function(req, res) {
 
-    if(req.query.token != tokens.tokens.owner && req.query.token != tokens.tokens.write){
+    if(req.query.access_token != tokens.tokens.owner && req.query.access_token != tokens.tokens.write){
         var err = new Error();
         err.status = 403;
         err.message = 'You are not permitted to perform this.';

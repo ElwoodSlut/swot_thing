@@ -12,10 +12,10 @@ router.get('/', function(req, res) {
 
     db.getAccessToken(function(token, used, err) {
 
-        if(used != 1 && req.query.accessToken == token){
+        if(used != 1 && req.query.access_token == token){
             db.setAccessTokenToUsed();
             //TODO: get network data dynamically
-            db.setNetworkData("swot","prototype");
+            db.setNetworkData("swot");
             res.json(registerInfo);
         }else{
             // a wrong parameter was sent

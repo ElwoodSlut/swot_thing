@@ -30,7 +30,7 @@ var initializeDB = function () {
             stmt2.run();
             stmt2.finalize();
 
-            db.run("CREATE TABLE network_data (network_token varchar(255), network_id varchar(255))");
+            db.run("CREATE TABLE network_data (network_token varchar(255))");
         }
     });
     db.close();
@@ -75,9 +75,9 @@ var getAccessToken = function(callback){
  * @param network_token
  * @param network_id
  */
-var setNetworkData = function(network_token, network_id){
+var setNetworkData = function(network_token){
     var db = new sqlite3.Database(dataFile);
-    var stmt = db.prepare("INSERT INTO network_data VALUES (?, ?)", network_token, network_id);
+    var stmt = db.prepare("INSERT INTO network_data VALUES (?)", network_token);
     stmt.run();
     stmt.finalize();
 
@@ -89,7 +89,7 @@ var setNetworkData = function(network_token, network_id){
  * @param network_token
  * @param network_id
  */
-var deleteNetworkData = function(network_token, network_id){
+var deleteNetworkData = function(network_token){
     var db = new sqlite3.Database(dataFile);
     db.run("DELETE FROM network_data WHERE network_token = ?", network_token);
     db.close();
