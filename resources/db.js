@@ -21,7 +21,7 @@ var initializeDB = function () {
     db.serialize(function() {
         if (!exists) {
             db.run("CREATE TABLE access_token (token varchar(255), used tinyint)");
-            var stmt = db.prepare("INSERT INTO access_token VALUES ('R3g!st3erT0k3n', 0)");
+            var stmt = db.prepare("INSERT INTO access_token VALUES ('r3g1st3rT0k3n', 0)");
             stmt.run();
             stmt.finalize();
 
