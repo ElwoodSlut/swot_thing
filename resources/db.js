@@ -85,6 +85,18 @@ var setNetworkData = function(network_token){
 };
 
 /**
+ * Gets the network token.
+ * @param callback
+ */
+var getNetworkData = function(callback){
+    var db = new sqlite3.Database(dataFile);
+    db.get("SELECT network_token FROM network_data WHERE ROWID = ?", 1 , function(err, row) {
+        callback(row.network_token, err);
+    });
+    db.close();
+};
+
+/**
  * Clears the given network data
  * @param network_token
  * @param network_id
@@ -122,6 +134,7 @@ module.exports.setAccessTokenFree = setAccessTokenFree;
 module.exports.initializeDB = initializeDB;
 module.exports.getAccessToken = getAccessToken;
 module.exports.setNetworkData = setNetworkData;
+module.exports.getNetworkData = getNetworkData;
 module.exports.deleteNetworkData = deleteNetworkData;
 module.exports.getStatusInfo = getStatusInfo;
 module.exports.setStatus = setStatus;

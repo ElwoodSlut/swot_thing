@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var request = require('request');
+
 var db = require('../../resources/db.js');
 var tokens = require('../../resources/tokens.js');
 
@@ -21,9 +23,35 @@ router.get('/switch_light', function(req, res) {
         res.status(403).json(err);
     }
 
-    if(req.query.lightswitch == "on" || req.query.lightswitch == "off") {
-        var light = req.query.lightswitch;
+    if(req.query.lightswitch == "0" || req.query.lightswitch == "1") {
+
+        var light = null;
+        if(req.query.lightswitch == 0) light = "off";
+        else light = "on";
+
         db.setStatus("lamp", light);
+
+        db.getNetworkData(function(accessToken, err) {
+            request.post(
+                'http://localhost/swot/web/app_dev.php/api/v1/thing/messages',
+                {
+                    form:
+                    { message: 'light switched' },
+                    headers: {
+                        "content-type" : "application/x-www-form-urlencoded",
+                        "accesstoken": accessToken
+                    }
+                },
+                function (error, response, body) {
+                    //@TODO: error handling?!
+                    if (!error && response.statusCode == 200) {
+                        console.log(body)
+                    }
+                }
+            );
+        });
+
+        var functionMessage = "Light switched " + light;
 
         var actionResponse = {
             "statusCode":				200,
@@ -38,7 +66,7 @@ router.get('/switch_light', function(req, res) {
                         "required": 	true
                     }]
             }};
-        actionResponse.message = "Light switched " + light;
+        actionResponse.message = functionMessage;
 
         res.json(actionResponse);
     }else{

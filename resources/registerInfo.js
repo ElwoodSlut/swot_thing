@@ -2,7 +2,7 @@ var tokens = require('./tokens.js');
 
 var registerInfo = {
     "device": {
-        "id": 12345,
+        "id": "SWOTY Prototype",
         "classification": "sdf",
         "url": "http://localhost:3000",
         "api": {
