@@ -12,10 +12,13 @@ router.get('/', function(req, res) {
 
     db.getAccessToken(function(token, used, err) {
 
-        if(used == 1 && req.query.access_token == tokens.tokens.owner){
+        if(used == 1 && req.query.access_token == tokens.tokens.owner_token){
+
             db.setAccessTokenFree();
-            //TODO: get/delete network data dynamically
-            db.deleteNetworkData("swot");
+            db.getNetworkData(function(network_token, err){
+                db.deleteNetworkData(network_token);
+            });
+
             res.send({
                 "statusCode":				200,
                 "status":					"deregistered",

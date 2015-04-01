@@ -1,8 +1,8 @@
 var tokens = {
     "tokens": {
-        "owner": "0wn3rT0k3n",
-        "write": "Wr!t3T0k3n",
-        "read": "R34dT0k3n"
+        "owner_token": "0wn3rT0k3n",
+        "write_token": "Wr!t3T0k3n",
+        "read_token": "R34dT0k3n"
     }
 };
 

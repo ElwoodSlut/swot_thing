@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-var request = require('request');
-
 var db = require('../../resources/db.js');
 var tokens = require('../../resources/tokens.js');
+var serverCom = require('../../resources/serverCommunication');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -16,7 +15,7 @@ router.get('/', function(req, res, next) {
  */
 router.get('/switch_light', function(req, res) {
 
-    if(req.query.access_token != tokens.tokens.owner && req.query.access_token != tokens.tokens.write){
+    if(req.query.access_token != tokens.tokens.owner_token && req.query.access_token != tokens.tokens.write_token){
         var err = new Error();
         err.status = 403;
         err.message = 'You are not permitted to perform this.';
@@ -31,28 +30,10 @@ router.get('/switch_light', function(req, res) {
 
         db.setStatus("lamp", light);
 
-        db.getNetworkData(function(accessToken, err) {
-            request.post(
-                'http://localhost/swot/web/app_dev.php/api/v1/thing/messages',
-                {
-                    form:
-                    { message: 'light switched' },
-                    headers: {
-                        "content-type" : "application/x-www-form-urlencoded",
-                        "accesstoken": accessToken
-                    }
-                },
-                function (error, response, body) {
-                    //@TODO: error handling?!
-                    if (!error && response.statusCode == 200) {
-                        console.log(body)
-                    }
-                }
-            );
-        });
+        var thingMessage = "light switched";
+        serverCom.sendMessageToServer(thingMessage);
 
         var functionMessage = "Light switched " + light;
-
         var actionResponse = {
             "statusCode":				200,
             "status":					"success",
