@@ -6,7 +6,7 @@ var functionsInfo = {
         "parameters": [
             {
                 "name": "lightswitch",
-                "type": "string",
+                "type": "integer",
                 "required": true,
                 "constraints": [
                     {
