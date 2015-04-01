@@ -4,6 +4,8 @@ var router = express.Router();
 var request = require('request');
 var db = require('./db');
 
+var thingFunctions = require('./functionsInfo');
+
 
 /**
  * Sends a status message to the swot server
@@ -40,9 +42,9 @@ var sendUpdateNotification = function(){
 
     db.getNetworkData(function(accessToken, err) {
         request.post(
-            'http://localhost/swot/web/app_dev.php/functions/update',
+            'http://localhost/swot/web/app_dev.php/api/v1/thing/functions/update',
             {
-                form: {message: "I have new functions"},
+                form: {message: thingFunctions},
                 headers: {
                     "content-type": "application/x-www-form-urlencoded",
                     "accesstoken": accessToken
