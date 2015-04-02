@@ -1,10 +1,9 @@
 extends layout
 
 block content
-  h3= "lamp status"
-  #message
-        if message
-            p Lamp is on
-        else
-            p Lamp is off
+
+    if message
+        <div style="background-color: yellow">on</div>
+    else
+        <div style="background-color: black;color:white">off</div>
 

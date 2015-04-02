@@ -9,7 +9,6 @@ var db = require('../../resources/db');
 router.get('/', function(req, res) {
 
     db.getStatusInfo(function(status, err){
-
         var light = false;
         if(status.lamp == "on") light = true;
         res.render('index', { title: 'Hey', message: light});
