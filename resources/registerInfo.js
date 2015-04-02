@@ -8,7 +8,8 @@ var registerInfo = {
         "api": {
             "deregister": "http://localhost:3000/deregister",
             "function": "http://localhost:3000/functions",
-            "status": "http://localhost:3000/status"
+            "status": "http://localhost:3000/status",
+            "profileimage": "http://localhost:3000/downloads/prototype_profile.jpg"
         }
     }};
 

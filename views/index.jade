@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h3= "lamp status"
+  #message
+        if message
+            p Lamp is on
+        else
+            p Lamp is off
+
