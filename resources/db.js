@@ -125,7 +125,7 @@ var setStatus = function(root, root_status){
     var db = new sqlite3.Database(dataFile);
     db.run("UPDATE status SET root_status = ? WHERE root = ?", root_status, root);
     db.close();
-}
+};
 
 
 // Exports the functions
