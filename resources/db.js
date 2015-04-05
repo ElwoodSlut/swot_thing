@@ -2,6 +2,10 @@ var fs = require('fs');
 var express = require('express');
 var router = express.Router();
 
+var server = require('http').Server(express);
+var io = require('socket.io')(server);
+server.listen(80);
+
 var dataFile = "resources/deviceData.db";
 
 var sqlite3 = require("sqlite3").verbose();
@@ -125,6 +129,12 @@ var setStatus = function(root, root_status){
     var db = new sqlite3.Database(dataFile);
     db.run("UPDATE status SET root_status = ? WHERE root = ?", root_status, root);
     db.close();
+
+    //getStatusInfo(function(status, err){
+        io.emit('status message', root_status);
+    //});
+
+
 };
 
 

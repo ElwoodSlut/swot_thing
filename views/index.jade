@@ -1,9 +1,23 @@
-extends layout
 
-block content
+doctype html
+html
+    head
+        title= "SWOT PROTOTYPE"
+        style
+            include ../public/stylesheets/style.css
+        //- extends layout
+        script
+            include ../resources/extlibs/socket.io.js
+        script
+            include ../resources/socketio.js
+    body
+    block content
 
-    if message
-        <div style="background-color: yellow">on</div>
-    else
-        <div style="background-color: black;color:white">off</div>
+        if message
+            <div class="lampOn" id="lamp">lamp is on</div>
+        else
+            <div class="lampOff" id="lamp">lamp is off</div>
+
+
+
 
