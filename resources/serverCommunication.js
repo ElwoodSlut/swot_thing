@@ -15,7 +15,7 @@ var sendMessageToServer = function(thingMessage){
 
     db.getNetworkData(function(accessToken, err) {
         request.post(
-            'http://localhost/swot/web/app_dev.php/api/v1/thing/messages',
+            'http://localhost:8080/swot/web/app_dev.php/api/v1/thing/messages',
             {
                 form:
                 { message: thingMessage },
@@ -26,8 +26,10 @@ var sendMessageToServer = function(thingMessage){
             },
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
+                    console.log("message was send successful");
                     console.log(body);
                 }else{
+                    console.log("message couldn't be send");
                     console.log(error);
                 }
             }
@@ -42,7 +44,7 @@ var sendUpdateNotification = function(){
 
     db.getNetworkData(function(accessToken, err) {
         request.post(
-            'http://localhost/swot/web/app_dev.php/api/v1/thing/functions/update',
+            'http://localhost:8080/swot/web/app_dev.php/api/v1/thing/functions/update',
             {
                 form: {message: thingFunctions},
                 headers: {
@@ -52,8 +54,10 @@ var sendUpdateNotification = function(){
             },
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
+                    console.log("update was send successful");
                     console.log(body);
                 } else {
+                    console.log("update couldn't be send");
                     console.log(error);
                 }
             }

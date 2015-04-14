@@ -10,3 +10,5 @@ To start the project:
 
 Then the protoype is available under `localhost:3000`
 
+If you are using XAMPP or similar tools: Make sure the Port 80 is free to use, because of socket-io listens on it. 
+

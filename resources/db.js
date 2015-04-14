@@ -103,7 +103,6 @@ var getNetworkData = function(callback){
 /**
  * Clears the given network data
  * @param network_token
- * @param network_id
  */
 var deleteNetworkData = function(network_token){
     var db = new sqlite3.Database(dataFile);
@@ -111,6 +110,10 @@ var deleteNetworkData = function(network_token){
     db.close();
 };
 
+/**
+ * Returns the status info of the sensors.
+ * @param callback
+ */
 var getStatusInfo = function(callback){
     var db = new sqlite3.Database(dataFile);
     db.all("SELECT root, root_status FROM status", function(err, rows) {
@@ -125,6 +128,11 @@ var getStatusInfo = function(callback){
     db.close();
 };
 
+/**
+ * Sets the status of a sensor.
+ * @param root
+ * @param root_status
+ */
 var setStatus = function(root, root_status){
     var db = new sqlite3.Database(dataFile);
     db.run("UPDATE status SET root_status = ? WHERE root = ?", root_status, root);
