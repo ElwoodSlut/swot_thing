@@ -3,7 +3,7 @@ var tokens = require('./tokens.js');
 var registerInfo = {
     "device": {
         "id": "SWOTY Prototype",
-        "classification": "sdf",
+        "classification": "Awesome WoT-Light",
         "url": "http://localhost:3000",
         "api": {
             "deregister": "http://localhost:3000/deregister",
