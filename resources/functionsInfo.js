@@ -1,11 +1,11 @@
 var functionsInfo = {
     "functions": [{
-        "name": "switch_light",
+        "name": "Switch light",
         "url": "http://localhost:3000/action/switch_light",
         "available": true,
         "parameters": [
             {
-                "name": "lightswitch",
+                "name": "Light",
                 "type": "Choice",
                 "choices": [
                     "off", "on"
@@ -14,7 +14,7 @@ var functionsInfo = {
                 "constraints": [
                     {
                         "type": "NotBlank",
-                        "message": "lightswitch may not be blank"
+                        "message": "Light may not be blank"
                     }
                 ]
             }

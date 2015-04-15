@@ -38,7 +38,7 @@ var sendMessageToServer = function(thingMessage){
 };
 
 /**
- * Sends update notification to the server.
+ * Sends update notification with the data to the server.
  */
 var sendUpdateNotification = function(){
 
