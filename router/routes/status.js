@@ -10,14 +10,14 @@ router.get('/', function(req, res) {
 
     db.getStatusInfo(function(status) {
 
-        if(req.query.access_token == tokens.tokens.owner_token || req.query.access_token == tokens.tokens.write_token || req.query.access_token == tokens.tokens.read_token){
+        if(req.query.token == tokens.tokens.owner_token || req.query.token == tokens.tokens.write_token || req.query.token == tokens.tokens.read_token){
             res.json(status);
         }else{
             // a wrong parameter was sent
             var err = new Error();
-            err.status = 500;
-            err.message = 'Something went wrong';
-            res.status(500).json(err);
+            err.status = 403;
+            err.message = 'You are not permitted to perform this.';
+            res.status(403).json(err);
         }
 
     });

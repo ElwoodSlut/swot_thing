@@ -117,13 +117,15 @@ var deleteNetworkData = function(network_token){
 var getStatusInfo = function(callback){
     var db = new sqlite3.Database(dataFile);
     db.all("SELECT root, root_status FROM status", function(err, rows) {
-        var status = {};
+        var info = "[";
         rows.forEach(function (row) {
-            var root = row.root;
-            var root_status = row.root_status;
-            status[root] = root_status;
-        })
-        callback(status);
+            var root = "'title' : '" + row.root + "'";
+            var root_status = "'value' : '" + row.root_status + "'";
+            info += "{" + root + "," + root_status + "}";
+        });
+        info += "]";
+        var statusObject = eval('(' + info + ')');
+        callback(statusObject);
     } );
     db.close();
 };
