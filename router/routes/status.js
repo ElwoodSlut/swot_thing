@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 
     db.getStatusInfo(function(status) {
 
-        if(req.query.token == tokens.tokens.owner_token || req.query.token == tokens.tokens.write_token || req.query.token == tokens.tokens.read_token){
+        if(req.query.token == tokens.tokens.read_token){
             res.json(status);
         }else{
             // a wrong parameter was sent

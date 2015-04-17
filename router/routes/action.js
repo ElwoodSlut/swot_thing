@@ -33,7 +33,7 @@ router.get('/switch_light', function(req, res) {
 
             var thingMessage = "light switched to " + light;
             serverCom.sendMessageToServer(thingMessage);
-            //serverCom.sendInfoUpdateNotification();
+            serverCom.sendInfoUpdateNotification();
 
             var functionMessage = "Light switched " + light;
             var actionResponse = {
