@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
 
     db.getAccessToken(function(token, used, err) {
 
-        if(used == 1 && req.query.access_token == tokens.tokens.owner_token){
+        if(used == 1 && req.headers['accesstoken'] == tokens.tokens.owner_token){
 
             db.setAccessTokenFree();
             db.getNetworkData(function(network_token, err){

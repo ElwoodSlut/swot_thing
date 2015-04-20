@@ -8,7 +8,7 @@ var tokens = require('../../resources/tokens.js');
  * Returns the device config as json object
  */
 router.get('/', function(req, res) {
-    if(req.query.token == tokens.tokens.read_token){
+    if(req.headers['accesstoken'] == tokens.tokens.read_token){
         res.json(func);
     }else{
         var err = new Error();

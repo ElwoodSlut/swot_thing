@@ -5,7 +5,7 @@ var functionsInfo = {
         "available": true,
         "parameters": [
             {
-                "name": "Light",
+                "name": "light",
                 "type": "Choice",
                 "choices": [
                     "off", "on"

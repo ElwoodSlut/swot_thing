@@ -15,15 +15,15 @@ router.get('/', function(req, res, next) {
  */
 router.get('/switch_light', function(req, res) {
 
-        if (req.query.token != tokens.tokens.owner_token && req.query.token != tokens.tokens.write_token) {
+        if (req.headers['accesstoken'] != tokens.tokens.owner_token && req.headers['accesstoken'] != tokens.tokens.write_token) {
             var err = new Error();
             err.status = 403;
             err.message = 'You are not permitted to perform this.';
             res.status(403).json(err);
         }else{
-            if (req.query.lightswitch == "0" || req.query.lightswitch == "1") {
+            if (req.query.light == "0" || req.query.light == "1") {
                 var light = null;
-                if (req.query.lightswitch == "0") light = "off";
+                if (req.query.light == "0") light = "off";
                 else light = "on";
 
                 db.setStatus("lamp", light);

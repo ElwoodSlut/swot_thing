@@ -11,9 +11,9 @@ var registerInfo = require('../../resources/registerInfo.js');
 router.get('/', function(req, res) {
 
     db.getAccessToken(function(token, used, err) {
-        if(used != 1 && req.query.access_token == token && req.query.network_token != ""){
-            //db.setAccessTokenToUsed();
-            db.setNetworkData(req.query.network_token);
+        if(used != 1 && req.query.access_token == token && req.headers['networktoken'] != ""){
+            db.setAccessTokenToUsed();
+            db.setNetworkData(req.headers['networktoken']);
             res.json(registerInfo);
         }else{
             // a wrong parameter was sent
