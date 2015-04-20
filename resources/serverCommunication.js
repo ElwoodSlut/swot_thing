@@ -93,6 +93,35 @@ var sendInfoUpdateNotification = function(){
     });
 };
 
+/**
+ * Sends profile image update notification with the data to the server.
+ */
+var sendImageUpdateNotification = function(){
+
+    db.getNetworkData(function(accessToken, err) {
+        request.post(
+            'http://localhost:8080/swot/web/app_dev.php/api/v1/thing/profileimage/update',
+            {
+                form: {profileimage: "http://localhost:3000/downloads/prototype_profile.jpg"},
+                headers: {
+                    "content-type": "application/x-www-form-urlencoded",
+                    "accesstoken": accessToken
+                }
+            },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    console.log("image update was send successful");
+                    console.log(body);
+                } else {
+                    console.log("image update couldn't be send");
+                    console.log(error);
+                }
+            }
+        );
+    });
+};
+
 module.exports.sendMessageToServer = sendMessageToServer;
 module.exports.sendUpdateNotification = sendUpdateNotification;
 module.exports.sendInfoUpdateNotification = sendInfoUpdateNotification;
+module.exports.sendImageUpdateNotification = sendImageUpdateNotification;
