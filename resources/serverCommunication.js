@@ -4,7 +4,7 @@ var router = express.Router();
 var request = require('request');
 var db = require('./db');
 
-var thingFunctions = require('./functionsInfo');
+var swotRestRoutes = require('./swotRestRoutes');
 
 
 /**
@@ -15,7 +15,7 @@ var sendMessageToServer = function(thingMessage){
 
     db.getNetworkData(function(accessToken, err) {
         request.post(
-            'http://localhost:8080/swot/web/app_dev.php/api/v1/thing/messages',
+            swotRestRoutes.routes.post_messages,
             {
                 form:
                 { message: thingMessage },
@@ -44,7 +44,7 @@ var sendUpdateNotification = function(){
 
     db.getNetworkData(function(accessToken, err) {
         request.post(
-            'http://localhost:8080/swot/web/app_dev.php/api/v1/thing/functions/update',
+            swotRestRoutes.routes.post_functions_update,
             {
                 form: {message: "The thing functions has been updated."},
                 headers: {
@@ -72,7 +72,7 @@ var sendInfoUpdateNotification = function(){
 
     db.getNetworkData(function(accessToken, err) {
         request.post(
-            'http://localhost:8080/swot/web/app_dev.php/api/v1/thing/information/update',
+            swotRestRoutes.routes.post_info_update,
             {
                 form: {message: "Thing information has been updated."},
                 headers: {
@@ -100,7 +100,7 @@ var sendImageUpdateNotification = function(){
 
     db.getNetworkData(function(accessToken, err) {
         request.post(
-            'http://localhost:8080/swot/web/app_dev.php/api/v1/thing/profileimage/update',
+            swotRestRoutes.routes.post_image_update,
             {
                 form: {profileimage: "http://localhost:3000/downloads/prototype_profile.jpg"},
                 headers: {

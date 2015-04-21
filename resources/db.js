@@ -35,6 +35,8 @@ var initializeDB = function () {
             stmt2.finalize();
 
             db.run("CREATE TABLE network_data (network_token varchar(255))");
+
+            console.log("New DB created");
         }
     });
     db.close();
@@ -77,7 +79,6 @@ var getAccessToken = function(callback){
 /**
  * Sets the network data of the device
  * @param network_token
- * @param network_id
  */
 var setNetworkData = function(network_token){
     var db = new sqlite3.Database(dataFile);
@@ -140,11 +141,8 @@ var setStatus = function(root, root_status){
     db.run("UPDATE status SET root_status = ? WHERE root = ?", root_status, root);
     db.close();
 
-    //getStatusInfo(function(status, err){
-        io.emit('status message', root_status);
-    //});
-
-
+    // send status to browser
+    io.emit('status message', root_status);
 };
 
 

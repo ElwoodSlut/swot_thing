@@ -35,20 +35,7 @@ router.get('/switch_light', function(req, res) {
                 var functionMessage = "Light switched " + light;
                 var actionResponse = {
                     "statusCode": 200,
-                    "status": "success",
-                    "request": {
-                        "requestedUrl": "http://localhost:3000/action/switch_light",
-                        "functionName": "switch_light",
-                        "params": [
-                            {
-                                "name": "lightswitch",
-                                "type": "Choice",
-                                "choices": [
-                                    "on", "off"
-                                ],
-                                "required": true
-                            }]
-                    }
+                    "status": "success"
                 };
                 actionResponse.message = functionMessage;
 
