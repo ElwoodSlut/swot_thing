@@ -40,6 +40,8 @@ router.get('/switch_light', function(req, res) {
                 actionResponse.message = functionMessage;
 
                 res.json(actionResponse);
+
+                io.emit("switch", light);
             } else {
                 // a wrong parameter was sent
                 var err = new Error();

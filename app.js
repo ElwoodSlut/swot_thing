@@ -8,10 +8,15 @@ var app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('public'));
 
 // express needs a render engine defined
 // otherwise an error is thrown
 app.set('view engine', 'jade');
+
+var server = require('http').Server(express);
+io = require('socket.io')(server);
+server.listen(80);
 
 // intialize the db
 var db = require('./resources/db');

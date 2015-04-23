@@ -5,18 +5,19 @@ html
         title= "SWOT PROTOTYPE"
         style
             include ../public/stylesheets/style.css
-        //- extends layout
         script
             include ../resources/extlibs/socket.io.js
-        script
-            include ../resources/socketio.js
     body
     block content
-
-        if message
-            <div class="lampOn" id="lamp">lamp is on</div>
-        else
-            <div class="lampOff" id="lamp">lamp is off</div>
+        <div id="lamp" class="lamp-off"></div>
+        script(type='text/javascript').
+            (function () {
+                var socket = io.connect('http://localhost');
+                socket.on('switch', function (light) {
+                    if (light == "off") document.getElementById("lamp").className = "lamp-off";
+                    if (light == "on") document.getElementById("lamp").className = "lamp-on";
+                });
+            }());
 
 
 

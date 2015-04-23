@@ -2,11 +2,11 @@ var tokens = require('./tokens.js');
 
 var registerInfo = {
     "device": {
-        "id": "SWOTY Prototype",
-        "classification": "Awesome WoT-Light",
-        "url": "http://localhost:3000",
+        "name": "SWOTY Prototype Light",
+        "description": "Awesome WoT-Light! You can turn it on and off, as you like!",
+        "profileimage": "http://localhost:3000/downloads/prototype_profile.jpg",
         "api": {
-            "profileimage": "http://localhost:3000/downloads/prototype_profile.jpg"
+            "url": "http://localhost:3000"
         }
     }};
 

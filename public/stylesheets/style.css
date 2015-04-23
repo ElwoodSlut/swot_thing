@@ -1,17 +1,13 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+#lamp {
+    width: 798px;
+    height: 1128px;
+    margin: 0 auto;
 }
 
-a {
-  color: #00B7FF;
+.lamp-on {
+    background: transparent url('../lamp_on.jpg') no-repeat center center;
 }
 
-.lampOn{
-    background-color: yellow;
-}
-
-.lampOff{
-    background-color: black;
-    color: white;
+.lamp-off {
+    background: transparent url('../lamp_off.jpg') no-repeat center center;
 }

@@ -2,10 +2,6 @@ var fs = require('fs');
 var express = require('express');
 var router = express.Router();
 
-var server = require('http').Server(express);
-var io = require('socket.io')(server);
-server.listen(80);
-
 var dataFile = "resources/deviceData.db";
 
 var sqlite3 = require("sqlite3").verbose();
@@ -29,8 +25,8 @@ var initializeDB = function () {
             stmt.run();
             stmt.finalize();
 
-            db.run("CREATE TABLE status (root varchar(255), root_status varchar(255))");
-            var stmt2 = db.prepare("INSERT INTO status VALUES ('lamp', 'off')");
+            db.run("CREATE TABLE information (title varchar(255), value varchar(255), type varchar(255))");
+            var stmt2 = db.prepare("INSERT INTO information VALUES ('lamp', 'off', null)");
             stmt2.run();
             stmt2.finalize();
 
@@ -117,32 +113,33 @@ var deleteNetworkData = function(network_token){
  */
 var getStatusInfo = function(callback){
     var db = new sqlite3.Database(dataFile);
-    db.all("SELECT root, root_status FROM status", function(err, rows) {
-        var info = "[";
+    db.all("SELECT title, value, type FROM information", function(err, rows) {
+
+        var info = { "information" : []};
+
         rows.forEach(function (row) {
-            var root = "'title' : '" + row.root + "'";
-            var root_status = "'value' : '" + row.root_status + "'";
-            info += "{" + root + "," + root_status + "}";
+            info.information.push({
+                "title": row.title,
+                "value": row.value,
+                "type": row.type
+            });
         });
-        info += "]";
-        var statusObject = eval('(' + info + ')');
-        callback(statusObject);
+
+        callback(info);
     } );
     db.close();
 };
 
 /**
  * Sets the status of a sensor.
- * @param root
- * @param root_status
+ * @param title
+ * @param value
+ * @param type
  */
-var setStatus = function(root, root_status){
+var setStatus = function(title, value, type){
     var db = new sqlite3.Database(dataFile);
-    db.run("UPDATE status SET root_status = ? WHERE root = ?", root_status, root);
+    db.run("UPDATE information SET value = ? AND type = ? WHERE title = ?", value, type, title);
     db.close();
-
-    // send status to browser
-    io.emit('status message', root_status);
 };
 
 
