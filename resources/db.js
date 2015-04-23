@@ -136,9 +136,9 @@ var getStatusInfo = function(callback){
  * @param value
  * @param type
  */
-var setStatus = function(title, value, type){
+var setStatus = function(title, value, type, callback){
     var db = new sqlite3.Database(dataFile);
-    db.run('UPDATE information SET value = ? AND type = ? WHERE title = ?', value, type, title);
+    db.run('UPDATE information SET value = ?, type = ? WHERE title = ?', [value, type, title], callback);
     db.close();
 };
 
