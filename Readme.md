@@ -1,4 +1,5 @@
 # SWOT Thing prototype
+## SWOT Lamp
 
 ### Installation:
 npm must be installed
