@@ -1,6 +1,10 @@
+body {
+    background-color: #000;
+}
+
 #lamp {
-    width: 798px;
-    height: 1128px;
+    width: 768px;
+    height: 986px;
     margin: 0 auto;
 }
 
