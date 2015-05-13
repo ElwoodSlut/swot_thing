@@ -12,6 +12,8 @@ html
         <div id="lamp" class="lamp-off"></div>
         script(type='text/javascript').
             (function () {
+                // For usage with XAMPP use localhost, e.g. :
+                // http://localhost:81
                 var socket = io.connect('http://13.13.13.15:81');
                 socket.on('switch', function (light) {
                     if (light == "off") document.getElementById("lamp").className = "lamp-off";
